@@ -6,26 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateMarcasTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('marcas', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('marcas', function (Blueprint $table) {
+			$table->id();
+			$table->string('nome', 30)->unique();
+			$table->string('imagem', 100)->comment('Logo da marca');
+			$table->timestamps();
+		});
+	}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('marcas');
-    }
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::dropIfExists('marcas');
+	}
 }
