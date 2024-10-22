@@ -27,17 +27,16 @@ class MarcaController extends Controller
 
     public function show(Marca $marca)
     {
-        
+        return $marca;
     }
 
     public function edit(Marca $marca)
     {
-        
+      
     }
 
     public function update(Request $request, Marca $marca)
     {
-        
     }
 
     public function destroy(Marca $marca)
