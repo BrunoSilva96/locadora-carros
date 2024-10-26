@@ -108,9 +108,8 @@ class MarcaController extends Controller
             return response()->json(['erro' => 'Impossivel realizar a exclusão. O recurso solicitado não existe'], 404);
         }
 
-        if($request->file('imagem')){
-            Storage::disk('public')->delete($marca->imagem);//disco que escolheu para persistir os dados Local/Public/s3
-        }
+        Storage::disk('public')->delete($marca->imagem);//disco que escolheu para persistir os dados Local/Public/s3
+        
 
         $marca->delete();
 
