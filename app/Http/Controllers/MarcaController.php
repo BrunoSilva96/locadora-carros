@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Sotrage;
 use App\Models\Marca;
 use Illuminate\Http\Request;
 
@@ -59,6 +60,7 @@ class MarcaController extends Controller
     {
         //$marca->update($request->all());
         //PUT e PATCH não trabalham com imagem, então confugurar no form-data um chamado Key->_method Value-> PATCH ou PUT
+        //Verbo no insominia tem que ser o post, seguindo o padrão acima
         $marca = $this->marca->find($id);
 
         if($marca === null){
@@ -82,6 +84,11 @@ class MarcaController extends Controller
             $request->validate($marca->rules(), $marca->feedback());
         }
 
+        //remove o arquivo antigo, caso um arquivo novo tenha sido enviado no request
+        if($request->file('imagem')){
+            Storage::disk('public')->delete($marca->imagem);//disco que escolheu para persistir os dados Local/Public/s3
+        }
+
         $imagem = $request->file('imagem');
         $imagem_urn = $imagem->store('imagens', 'public');
         
@@ -99,6 +106,10 @@ class MarcaController extends Controller
 
         if($marca === null){
             return response()->json(['erro' => 'Impossivel realizar a exclusão. O recurso solicitado não existe'], 404);
+        }
+
+        if($request->file('imagem')){
+            Storage::disk('public')->delete($marca->imagem);//disco que escolheu para persistir os dados Local/Public/s3
         }
 
         $marca->delete();
