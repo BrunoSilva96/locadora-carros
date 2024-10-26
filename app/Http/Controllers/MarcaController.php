@@ -58,7 +58,7 @@ class MarcaController extends Controller
     public function update(Request $request, $id)
     {
         //$marca->update($request->all());
-
+        //PUT e PATCH não trabalham com imagem, então confugurar no form-data um chamado Key->_method Value-> PATCH ou PUT
         $marca = $this->marca->find($id);
 
         if($marca === null){
@@ -82,7 +82,14 @@ class MarcaController extends Controller
             $request->validate($marca->rules(), $marca->feedback());
         }
 
-        $marca->update($request->all());
+        $imagem = $request->file('imagem');
+        $imagem_urn = $imagem->store('imagens', 'public');
+        
+        $marca->update([
+            'nome' => $request->nome,
+            'imagem' => $imagem_urn
+        ]);
+
         return response()->json($marca, 200);
     }
 
