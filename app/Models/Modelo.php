@@ -17,9 +17,14 @@ class Modelo extends Model
             'nome'          => 'required|unique:modelos,nome,'.$this->id.'|min:3',
             'imagem'        => 'required|file|mimes:png,jpeg,jpg',//pode colocar mis tipos de extensão de arquivo
             'numero_portas' => 'required|integer|digits_between:1,5',//(1,2,3,4,5)
-            'lugares'       => 'required|integer|digitis_between:1,20',
+            'lugares'       => 'required|integer|digits_between:1,20',
             'air_bag'       => 'required|boolean',
             'abs'           => 'required|boolean'//true, false, 1, 0, '1', '0'
         ];
+    }
+
+    public function marca() {
+        //UM modelo PERTENCE a UMA marca
+        return $this->belongsTo('App\Models\Marca');
     }
 }

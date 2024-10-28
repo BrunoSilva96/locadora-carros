@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Sotrage;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Marca;
 use Illuminate\Http\Request;
 
@@ -16,9 +16,8 @@ class MarcaController extends Controller
     public function index()
     {
         //$marcas = Marca::all();
-        $marcas = $this->marca->all();
 
-        return response()->json($marcas, 200);
+        return response()->json($marcas = $this->marca->with('modelos')->get(), 200);
     }
 
     public function create()
@@ -44,7 +43,7 @@ class MarcaController extends Controller
 
     public function show($id)
     {
-        $marca = $this->marca->find($id);
+        $marca = $this->marca->with('modelos')->find($id);
         if($marca === null){
             return response()->json(['erro' => 'Recurso pesquisiado não existe'], 404);
         }
@@ -78,16 +77,15 @@ class MarcaController extends Controller
                     $regrasDinamicas[$input] = $regra;           
                 }
             }            
-            
             $request->validate($regrasDinamicas, $marca->feedback());
         } else {
             $request->validate($marca->rules(), $marca->feedback());
         }
-
+        
         //remove o arquivo antigo, caso um arquivo novo tenha sido enviado no request
-        if($request->file('imagem')){
-            Storage::disk('public')->delete($marca->imagem);//disco que escolheu para persistir os dados Local/Public/s3
-        }
+            if($request->file('imagem')){
+                Storage::disk('public')->delete($marca->imagem);//disco que escolheu para persistir os dados Local/Public/s3
+            }
 
         $imagem = $request->file('imagem');
         $imagem_urn = $imagem->store('imagens', 'public');

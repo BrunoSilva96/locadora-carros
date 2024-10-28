@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Marca extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['nome', 'imagem'];
 
     public function rules(){
@@ -23,5 +25,9 @@ class Marca extends Model
             'nome.min' => 'O nome deve conter no minimo 3 letras.'
         ];
     }
-    use HasFactory;
+
+    public function modelos(){
+        //UMA marca PUSSUI MUITOS modelos
+        return $this->hasMany('App\Models\Modelo');
+    }
 }

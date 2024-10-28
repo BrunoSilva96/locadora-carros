@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Sotrage;
+use Illuminate\Support\Facades\Sotorage;
 use App\Models\Modelo;
 use Illuminate\Http\Request;
 
 class ModeloController extends Controller
 {
     public function __construct(Modelo $modelo){
-        $this->marca = $marca;
+        $this->modelo = $modelo;
     }
 
     public function index()
     {
-        return response()->json($this->modelo->all(), 200);
+        return response()->json($this->modelo->with('marca')->get(), 200);
+        //all() -> criando um obj de consulta + get() = collection
+        //get() -> modificar a consulta -> collection
     }
 
     public function create()
@@ -30,7 +32,7 @@ class ModeloController extends Controller
         $imagem_urn = $imagem->store('imagens/modelos', 'public');
 
         $modelo = $this->modelo->create([
-            'marca_id'      => $request->modelo_id,
+            'marca_id'      => $request->marca_id,
             'nome'          => $request->nome,
             'imagem'        => $imagem_urn,
             'numero_portas' => $request->numero_portas,
@@ -44,7 +46,7 @@ class ModeloController extends Controller
 
     public function show($id)
     {
-        $modelo = $this->modelo->find($id);
+        $modelo = $this->modelo->with('marca')->find($id);
         if($modelo === null) {
             return response()->json(['erro' => 'Recurso pesquisiado não existe'], 404);
         }
