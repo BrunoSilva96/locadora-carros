@@ -34,9 +34,9 @@ class ModeloController extends Controller
 
         if($request->has('atributos')){
             $atributos = $request->atributos;
-            $modelos = $modelos->selectRaw($atributos)->with('marca: id,'.$atributos_marca)->get();
+            $modelos = $modelos->selectRaw($atributos)->get();
         } else {
-            $modelos = $modelos->modelo->get();
+            $modelos = $modelos->get();
         }
 
         //$this->modelo->with('marca')->get()
