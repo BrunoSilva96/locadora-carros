@@ -46,7 +46,7 @@ class CarroController extends Controller
         $request->validate($this->carro->rules());
 
         $carro = $this->carro->create([
-            'modelo_id'  => $request->nome,
+            'modelo_id'  => $request->modelo_id,
             'placa'      => $request->placa,
             'disponivel' => $request->disponivel,
             'km'         => $request->km
