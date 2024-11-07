@@ -6,6 +6,7 @@ use App\Http\Requests\StoreLocacaoRequest;
 use App\Http\Requests\UpdateLocacaoRequest;
 use App\Models\Locacao;
 use App\Repositories\LocacaoRepository;
+use Illuminate\Http\Request;
 
 
 class LocacaoController extends Controller

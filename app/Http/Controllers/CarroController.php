@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCarroRequest;
 use App\Http\Requests\UpdateCarroRequest;
 use App\Models\Carro;
 use App\Repositories\CarroRepository;
+use Illuminate\Http\Request;
 
 class CarroController extends Controller
 {
@@ -21,7 +22,7 @@ class CarroController extends Controller
             $atributos_modelo = 'modelo: id,'.$request->atributos_modelo;
             $carroRepository->selectAtributosRegistrosRelacionados($atributos_modelo);
         } else {
-            $carros = $this->marca->with('modelos');
+            $carros = $this->carro->with('modelos');
             $carroRepository->selectAtributosRegistrosRelacionados('modelos');
         }
 
