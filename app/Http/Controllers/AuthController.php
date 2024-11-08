@@ -16,11 +16,11 @@ class AuthController extends Controller
         } else {
             return response()->json(['erro' => 'Usuário ou senha inválido!'], 403);
         }
-
-        return 'login';
     }
     public function logout(){
-        return 'logout';
+        auth('api')->logout();
+
+        return response()->json(['msg' => 'O logout foi efetuado com sucesso!']);
     }
     public function refresh(){
         $token = auth('api')->refresh();//cleinte encaminh um jwt válido
