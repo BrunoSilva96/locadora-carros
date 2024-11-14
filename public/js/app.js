@@ -5104,14 +5104,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     login: function login(e) {
-      var url = 'http://127.0.0.1:8000/login';
+      var url = 'http://127.0.0.1:8000/api/login';
       var configuracao = {
         method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': this.csrf_token
-        },
-        body: JSON.stringify({
+        body: new URLSearchParams({
           'email': this.email,
           'password': this.password
         })
@@ -5120,7 +5116,7 @@ __webpack_require__.r(__webpack_exports__);
         return response.json();
       }).then(function (data) {
         if (data.token) {
-          document.cookie = 'token=' + data.token + ';SameSite=Lax';
+          document.cookie = 'token=' + data.token + '; SameSite=Lax; path=/';
         }
       });
       e.target.submit();

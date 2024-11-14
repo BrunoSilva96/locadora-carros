@@ -16,6 +16,8 @@ class AuthController extends Controller
         } else {
             return response()->json(['erro' => 'Usuário ou senha inválido!'], 403);
         }
+
+        return 'login';
     }
     public function logout(){
         auth('api')->logout();

@@ -102,27 +102,22 @@
         },
         methods: {
             login(e){
-                let url = 'http://127.0.0.1:8000/login'
+                let url = 'http://127.0.0.1:8000/api/login'
                 let configuracao = {
                     method: 'post',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': this.csrf_token
-                    },
-                    body: JSON.stringify({
+                    body: new URLSearchParams({
                         'email': this.email,
                         'password': this.password
                     })
                 };
 
                 fetch(url, configuracao)
-                    .then(response => {return response.json()})
+                    .then(response => response.json())
                     .then(data => {
-                        if(data.token){
-                            document.cookie = 'token='+data.token+';SameSite=Lax';
+                        if (data.token) {
+                            document.cookie = 'token=' + data.token + '; SameSite=Lax; path=/';
                         }
-                    }
-                )
+                    })
                 e.target.submit();
             }
         }
