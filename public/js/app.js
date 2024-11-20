@@ -5185,6 +5185,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  computed: {
+    token: function token() {
+      var token = document.cookie.split(';').find(function (index) {
+        return index.includes('token=');
+      });
+      token = token.split('=')[1];
+      token = 'Bearer ' + token;
+      return token;
+    }
+  },
   data: function data() {
     return {
       urlBase: 'http://127.0.0.1:8000/api/v1/marca',
@@ -5203,7 +5213,8 @@ __webpack_require__.r(__webpack_exports__);
       var config = {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Authorization': this.token
         }
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.urlBase, formData, config).then(function (response) {
