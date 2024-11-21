@@ -5223,15 +5223,25 @@ __webpack_require__.r(__webpack_exports__);
       nomeMarca: '',
       arquivoImagem: [],
       transacaoStatus: '',
-      transacaoDetalhes: {}
+      transacaoDetalhes: {},
+      marcas: []
     };
   },
   methods: {
+    carregarLista: function carregarLista() {
+      var _this = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.urlBase).then(function (response) {
+        _this.marcas = response.data;
+        console.log(response.data);
+      })["catch"](function (errors) {
+        console.log(errors);
+      });
+    },
     carregarImagem: function carregarImagem(e) {
       this.arquivoImagem = e.target.files;
     },
     salvar: function salvar() {
-      var _this = this;
+      var _this2 = this;
       var formData = new FormData();
       formData.append('nome', this.nomeMarca);
       formData.append('imagem', this.arquivoImagem[0]);
@@ -5243,20 +5253,23 @@ __webpack_require__.r(__webpack_exports__);
         }
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.urlBase, formData, config).then(function (response) {
-        _this.transacaoStatus = 'adicionado';
-        _this.transacaoDetalhes = {
+        _this2.transacaoStatus = 'adicionado';
+        _this2.transacaoDetalhes = {
           mensagem: 'ID do registro: ' + response.data.id
         };
         console.log(response);
       })["catch"](function (errors) {
-        _this.transacaoStatus = 'erro';
-        _this.transacaoDetalhes = {
+        _this2.transacaoStatus = 'erro';
+        _this2.transacaoDetalhes = {
           mensagem: errors.response.data.message,
           dados: errors.response.data.errors
         };
         console.log(errors.response.data.message);
       });
     }
+  },
+  mounted: function mounted() {
+    this.carregarLista();
   }
 });
 
@@ -5928,7 +5941,7 @@ var staticRenderFns = [function () {
     attrs: {
       scope: "col"
     }
-  }, [_vm._v("#")]), _vm._v(" "), _c("th", {
+  }, [_vm._v("ID")]), _vm._v(" "), _c("th", {
     attrs: {
       scope: "col"
     }
