@@ -2,11 +2,10 @@
   <div :class="estilo" role="alert">
     {{ titulo }}
     <hr>
-    <spam v-if="detalhes.data.message">{{ detalhes.data.message  }}</spam>
-    <spam v-if="detalhes.data.id">{{ 'ID do registro: ' + detalhes.data.id  }}</spam>
+    <p>{{ detalhes.mensagem }}</p>
     <br>
-    <ul v-if="detalhes.data.errors">
-      <li v-for="e, key in detalhes.data.errors" :key="key">
+    <ul v-if="detalhes.dados">
+      <li v-for="e, key in detalhes.dados" :key="key">
         {{ e[0] }}
       </li>
     </ul>
