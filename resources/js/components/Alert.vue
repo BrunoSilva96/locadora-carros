@@ -1,12 +1,22 @@
 <template>
   <div :class="estilo" role="alert">
-    A simple success alert—check it out!
+    {{ titulo }}
+    <hr>
+    <spam v-if="detalhes.data.message">{{ detalhes.data.message  }}</spam>
+    <spam v-if="detalhes.data.id">{{ 'ID do registro: ' + detalhes.data.id  }}</spam>
+    <br>
+    <ul v-if="detalhes.data.errors">
+      <li v-for="e, key in detalhes.data.errors" :key="key">
+        {{ e[0] }}
+      </li>
+    </ul>
+
   </div>
 </template>
 
 <script>
   export default {
-    props: ['tipo'],
+    props: ['tipo', 'titulo', 'detalhes'],
     computed: {
       estilo(){
         return 'alert alert-'+this.tipo
